@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Marvel Comics</title>
+        
+        <!-- Fuente de Google Fonts -->
+        <link href="https://fonts.googleapis.com/css2?family=Bangers&display=swap" rel="stylesheet">
+        
+        <link rel="stylesheet" href="./css/bootstrap.min.css">
+        <link rel="stylesheet" href="./css/style.css">
+        <script src="https://cdn.jsdelivr.net/npm/vue@3.2.37/dist/vue.global.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/axios@1.3.1/dist/axios.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/crypto-js@4.1.1/core.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/crypto-js@4.1.1/md5.js"></script>
+      </head>
+      
+<body>
+  <div id="app" class="container-fluid">
+    <div class="row">
+      <!-- Barra lateral de personajes -->
+      <div class="col-md-3">
+        <div class="list-group">
+          <h1 class="text-center mb-4">Personajes</h1>
+          <button v-for="personaje in personajes" :key="personaje.id" class="list-group-item list-group-item-action" @click="filtrarPorPersonaje(personaje.name)">
+            {{ personaje.name }}
+          </button>
+        </div>
+      </div>
+
+      <!-- Contenido de los cómics -->
+      <div class="col-md-9">
+        <h1 class="display-4 text-center text-white">MUNDO MARVEL</h1>
+
+        <!-- Barra de búsqueda -->
+        <div class="input-group mb-3">
+          <input type="text" class="form-control" placeholder="Buscar cómic por título" v-model="busqueda">
+        </div>
+
+        <!-- Barra de progreso -->
+        <div class="row mb-4">
+          <div class="col-12">
+            <div class="progress" role="progressbar" aria-label="Example with label" aria-valuenow="porcentaje" aria-valuemin="0" aria-valuemax="100">
+              <div class="progress-bar" :class="color" :style="{ width: porcentaje + '%' }"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mostrar cómics -->
+        <div class="row">
+          <div class="col-md-4" v-for="comic in buscarComic" :key="comic.id">
+            <div class="card mb-4 shadow-lg">
+              <img :src="comic.thumbnail" class="card-img-top" :alt="comic.title">
+              <div class="card-body">
+                <h5 class="card-title">{{ comic.title }}</h5>
+                <p class="card-text"><strong>Precio:</strong> {{ comic.price }}</p>
+                <button type="button" class="btn btn-danger">Comprar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Número de cómics encontrados -->
+        <div v-if="comicsEncontrados > 0" class="mt-4">
+          <p class="text-white"><strong>Se encontraron {{ comicsEncontrados }} cómics</strong></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Vinculación del archivo JavaScript -->
+   <script src="./js/md5.js"></script>
+  <script src="./js/script.js"></script>
+</body>
+</html>
